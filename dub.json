@@ -3,6 +3,8 @@
 	"description": "A D implementation of the hashids library",
 	"authors": ["Viking Edström"],
 	"license": "MIT",
+	"copyright": "(c) 2015 Viking Edström",
+	"targetType": "sourceLibrary",
 	"dependencies": {
 	}
 }

@@ -1,9 +1,9 @@
 #D Hashids
 A [D](http://dlang.org/) port of [hashids](http://hashids.org/), a library for encoding integer sequences as opaque, url-friendly blobs.
 ##Usage
-```
+```d
 import hashids;
-auto hasher = new Hashid();
+auto hasher = new Hashids();
 string hash = hasher.hash(1, 2, 3); // "o2fXhv"
 ulong[] numbers = hasher.decode(hash); // [1, 2, 3]
 ```

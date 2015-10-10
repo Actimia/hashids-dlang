@@ -20,6 +20,47 @@ class Hashids {
     string salt;
     uint minHashLength;
 
+    string consistentShuffle(const string alphas, const string salt) pure const {
+        if(!salt.length) { return alphas; }
+
+        char[] str = alphas.dup;
+
+        for(int i = str.length - 1, v = 0, p = 0; i > 0; i--, v++){
+            v %= salt.length;
+            int c = salt[v];
+            p += c;
+            int j = (c + v + p) % i;
+
+            char temp = str[j];
+            str[j] = str[i];
+            str[i] = temp;
+        }
+        return str.to!string;
+    }
+
+    string hash(ulong input, const string alphabet) pure const{
+        char[] hash = [];
+
+        do {
+            hash = alphabet[input % $] ~ hash;
+            input = input / alphabet.length.to!ulong;
+        } while (input);
+
+        return hash.to!string;
+    }
+
+    ulong unhash(const string input, const string alphabet) pure const{
+        ulong num = 0;
+        for (int i = 0; i < input.length; i++){
+            ulong pos = alphabet.indexOf(input[i]);
+            num += pos * pow(alphabet.length.to!ulong, (input.length - i - 1).to!ulong);
+        }
+
+        return num;
+    }
+
+    public:
+
     this(const string _salt="", const uint _minHashLength=0, const string _alphabet=ALPHABET) pure {
         this.salt = _salt;
         this.minHashLength = _minHashLength;
@@ -72,46 +113,6 @@ class Hashids {
         }
     }
 
-    string consistentShuffle(const string alphas, const string salt) pure const {
-        if(!salt.length) { return alphas; }
-
-        char[] str = alphas.dup;
-
-        for(int i = str.length - 1, v = 0, p = 0; i > 0; i--, v++){
-            v %= salt.length;
-            int c = salt[v];
-            p += c;
-            int j = (c + v + p) % i;
-
-            char temp = str[j];
-            str[j] = str[i];
-            str[i] = temp;
-        }
-        return str.to!string;
-    }
-
-    string hash(ulong input, const string alphabet) pure const{
-        char[] hash = [];
-
-        do {
-            hash = alphabet[input % $] ~ hash;
-            input = input / alphabet.length.to!ulong;
-        } while (input);
-
-        return hash.to!string;
-    }
-
-    ulong unhash(const string input, const string alphabet) pure const{
-        ulong num = 0;
-        for (int i = 0; i < input.length; i++){
-            ulong pos = alphabet.indexOf(input[i]);
-            num += pos * pow(alphabet.length.to!ulong, (input.length - i - 1).to!ulong);
-        }
-
-        return num;
-    }
-
-    public:
 
     string encode(const ulong[] numbers...) pure const{
         string res = "";

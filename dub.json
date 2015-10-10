@@ -1,7 +1,8 @@
 {
 	"name": "hashids",
 	"description": "A D implementation of the hashids library",
-	"authors": ["Actimia"],
+	"authors": ["Viking Edström"],
+	"license": "MIT",
 	"dependencies": {
 	}
 }

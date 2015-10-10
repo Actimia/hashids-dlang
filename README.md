@@ -12,5 +12,12 @@ Hashid constructor takes three optional parameters:
  - minimum hash length (a uint)
  - alphabet (a string)
 
+##Installation
+```json
+"dependencies": {
+    "hashids": ">=1.0.0"
+}
+```
+
 ##Acknowledgements
  - [python-hashids](https://github.com/davidaurelio/hashids-python) for excellent unittests which were ported over.

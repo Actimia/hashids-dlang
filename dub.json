@@ -1,0 +1,7 @@
+{
+	"name": "hashids",
+	"description": "A D implementation of the hashids library",
+	"authors": ["Actimia"],
+	"dependencies": {
+	}
+}
